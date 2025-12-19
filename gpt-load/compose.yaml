@@ -1,0 +1,21 @@
+services:
+  gpt-load:
+    image: tbphp/gpt-load:latest
+    container_name: gpt-load
+    ports:
+      - 5105:3001
+    environment:
+      - AUTH_KEY=<changeme>
+      - ENABLE_CORS=true
+      - ALLOWED_ORIGINS='*'
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data
+    stop_grace_period: 10s
+    healthcheck:
+      test: wget -q --spider -T 10 -O /dev/null http://localhost:3001/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+networks: {}

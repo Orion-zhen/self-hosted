@@ -1,0 +1,11 @@
+services:
+  music-tag:
+    image: xhongc/music_tag_web:latest
+    container_name: music-tag-web
+    ports:
+      - 5108:8002
+    volumes:
+      - <changeme>:/app/media:rw # 音乐文件目录
+      - ./data:/app/data
+    restart: unless-stopped
+networks: {}

@@ -1,0 +1,6 @@
+services:
+  bentopdf:
+    ports:
+      - 5106:8080
+    image: bentopdf/bentopdf:latest
+networks: {}

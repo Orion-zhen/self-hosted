@@ -1,0 +1,9 @@
+services:
+  whatsupdocker:
+    image: getwud/wud:latest
+    container_name: wud
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 5003:3000
+networks: {}

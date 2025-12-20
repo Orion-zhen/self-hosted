@@ -6,5 +6,7 @@ services:
       - ./config/:/etc/searxng/
     ports:
       - 5104:8080
+    env_file:
+      - ./.env
     container_name: searxng
 networks: {}

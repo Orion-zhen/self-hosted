@@ -1,23 +1,12 @@
 services:
-  core:
-    environment:
-      - TZ=Asia/Shanghai
-      - ND_LOGLEVEL=info
-      - ND_DEFAULTLANGUAGE=zh-Hans # 默认语言改为中文
-      - ND_ENABLEGRAVATAR=false # 禁用 Gravatar 头像集成
-      - ND_ENABLEREPLAYGAIN=false # 禁用 Web 界面调整回放增益的功能
-      - ND_ENABLESHARING=false # 禁用分享功能, 如果你需要分享给别人可以打开
-      - ND_ENABLESTARRATING=false # 禁用 Web 界面的五星评级歌曲功能
-      - ND_ENABLEUSEREDITING=false # 禁止普通用户更改自身信息与登录凭据, 安全考量
-      - ND_LASTFM_ENABLED=false # 禁用 Last.fm 集成
-      - ND_LISTENBRAINZ_ENABLED=false # 禁用 ListenBrainZ 元数据库集成
-      - ND_MAXSIDEBARPLAYLISTS=300 # 调整侧边最多显示的播放列表数为 300 (默认 100)
-      - ND_SCANNER_GROUPALBUMRELEASES=true # 禁用按照日期区分专辑, 防止 Navidrome 错误的按照日期从专辑中拆分单曲
+  navidrome:
     image: deluan/navidrome:latest
     ports:
       - 5103:4533
+    env_file:
+      - ./.env
     restart: unless-stopped
     volumes:
       - ./data:/data
-      - <changeme>:/music:ro # 注意音乐文件夹是 ro 即只读的, Navidrome 不需要也不会对你的音乐库实际文件进行任何修改操作
+      - $MUSIC_DIR:/music:ro # 注意音乐文件夹是ro即只读的，Navidrome 不需要也不会对你的音乐库实际文件进行任何修改操作
 networks: {}

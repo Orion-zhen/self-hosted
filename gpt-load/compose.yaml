@@ -4,10 +4,8 @@ services:
     container_name: gpt-load
     ports:
       - 5105:3001
-    environment:
-      - AUTH_KEY=<changeme>
-      - ENABLE_CORS=true
-      - ALLOWED_ORIGINS='*'
+    env_file:
+      - ./.env
     restart: unless-stopped
     volumes:
       - ./data:/app/data

@@ -5,7 +5,7 @@ services:
     ports:
       - 5108:8002
     volumes:
-      - <changeme>:/app/media:rw # 音乐文件目录
+      - $MUSIC_DIR:/app/media:rw
       - ./data:/app/data
     restart: unless-stopped
 networks: {}

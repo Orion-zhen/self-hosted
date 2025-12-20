@@ -1,0 +1,44 @@
+services:
+  webserver:
+    image: liuweitao/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - broker
+      - gotenberg
+      - tika
+    ports:
+      - 5109:8000
+    volumes:
+      - ./data:/usr/src/paperless/data
+      - $PAPERLESS_FILES:/usr/src/paperless/media
+      - $PAPERLESS_EXPORT:/usr/src/paperless/export
+      - $PAPERLESS_CONSUME:/usr/src/paperless/consume
+    env_file:
+      - ./.env
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_TIKA_ENABLED: 1
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+      PAPERLESS_TIKA_ENDPOINT: http://tika:9998
+  broker:
+    image: redis:latest
+    restart: unless-stopped
+    volumes:
+      - ./redisdata:/data
+  gotenberg:
+    image: gotenberg/gotenberg:latest
+    restart: unless-stopped
+    # The gotenberg chromium route is used to convert .eml files. We do not
+    # want to allow external content like tracking pixels or even javascript.
+    command:
+      - gotenberg
+      - --chromium-disable-javascript=true
+      - --chromium-allow-list=file:///tmp/.*
+  tika:
+    image: apache/tika:latest-full
+    restart: unless-stopped
+volumes:
+  data: null
+  media: null
+  redisdata: null
+networks: {}

@@ -2,6 +2,7 @@ services:
   gpt-load:
     image: tbphp/gpt-load:latest
     container_name: gpt-load
+    user: 1000:1000
     ports:
       - 5105:3001
     env_file:

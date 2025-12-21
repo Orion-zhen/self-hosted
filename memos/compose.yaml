@@ -2,6 +2,7 @@ services:
   memos:
     image: neosmemo/memos:stable
     container_name: memos
+    user: 1000:1000
     ports:
       - 5102:5230
     volumes:

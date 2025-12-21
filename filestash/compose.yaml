@@ -1,0 +1,14 @@
+services:
+  filestash:
+    container_name: filestash
+    image: machines/filestash:latest
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data/state
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - 5100:8334
+    # 修复 host.docker.internal
+    extra_hosts:
+      - host.docker.internal:host-gateway
+networks: {}

@@ -1,0 +1,17 @@
+services:
+  webdav:
+    image: ugeek/webdav:amd64
+    restart: unless-stopped
+    ports:
+      - 5110:80
+    environment:
+      LOCATION: / # 默认 URL 根路径
+      USERNAME: admin
+      PASSWORD: passwd
+      TZ: Asia/Shanghai
+      UID: 1000
+      GID: 1000
+    volumes:
+      - /mnt/path/webdav:/media # webdav 根路径
+      - /mnt/path/zotero:/media/zotero # zotero 专用路径
+networks: {}
